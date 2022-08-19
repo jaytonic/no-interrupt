@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from 'reactfire';
 import * as yup from 'yup';
 import TailwindHelper from '../tailwind-helper';
+import * as firebase from 'firebase/auth';
 type LoginData = {
   email: string;
   password: string;
