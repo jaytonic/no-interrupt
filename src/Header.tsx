@@ -1,7 +1,8 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from 'reactfire';
 import TailwindHelper from './tailwind-helper';
 const navigation = [
   { name: 'Home', href: '/', current: true },
@@ -11,7 +12,7 @@ const navigation = [
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Sign out', 22222222 },
 ];
 
 const user = {
@@ -21,6 +22,12 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 };
 export const Header = () => {
+  const auth = useAuth();
+  let navigate = useNavigate();
+  const logout = () => {
+    auth.signOut();
+    navigate('/');
+  };
 
   return (
     <div className="bg-indigo-600 pb-32">
@@ -58,25 +65,6 @@ export const Header = () => {
                     </div>
                   </div>
                 </div>
-                {/* <div className="flex-1 px-2 flex justify-center lg:ml-6 lg:justify-end">
-                  <div className="max-w-lg w-full lg:max-w-xs">
-                    <label htmlFor="search" className="sr-only">
-                      Search
-                    </label>
-                    <div className="relative text-gray-400 focus-within:text-gray-600">
-                      <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-                        <SearchIcon className="h-5 w-5" aria-hidden="true" />
-                      </div>
-                      <input
-                        id="search"
-                        className="block w-full bg-white py-2 pl-10 pr-3 border border-transparent rounded-md leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white focus:border-white sm:text-sm"
-                        placeholder="Search"
-                        type="search"
-                        name="search"
-                      />
-                    </div>
-                  </div>
-                </div> */}
                 <div className="flex lg:hidden">
                   {/* Mobile menu button */}
                   <Disclosure.Button className="bg-indigo-600 p-2 rounded-md inline-flex items-center justify-center text-indigo-200 hover:text-white hover:bg-indigo-500 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
