@@ -1,25 +1,23 @@
 import React from 'react';
 import logo from './logo.svg';
+import { doc, getFirestore } from 'firebase/firestore';
+import { Test } from './Test';
+import {
+  FirestoreProvider,
+  useFirestoreDocData,
+  useFirestore,
+  useFirebaseApp,
+} from 'reactfire';
 import './App.css';
 
 function App() {
+  const firestoreInstance = getFirestore(useFirebaseApp());
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FirestoreProvider sdk={firestoreInstance}>
+      <div className='App'>
+        <Test />
+      </div>
+    </FirestoreProvider>
   );
 }
 
