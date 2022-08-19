@@ -1,14 +1,7 @@
-import React from 'react';
-import logo from './logo.svg';
-import { doc, getFirestore } from 'firebase/firestore';
-import { Test } from './Test';
-import {
-  FirestoreProvider,
-  useFirestoreDocData,
-  useFirestore,
-  useFirebaseApp,
-} from 'reactfire';
+import { getFirestore } from 'firebase/firestore';
+import { FirestoreProvider, useFirebaseApp } from 'reactfire';
 import './App.css';
+import { Test } from './Test';
 
 function App() {
   const firestoreInstance = getFirestore(useFirebaseApp());
