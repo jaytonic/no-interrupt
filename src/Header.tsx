@@ -9,11 +9,6 @@ const navigation = [
   { name: 'My queue', href: '/queue', current: false },
   { name: 'My tickets', href: '/tickets', current: false },
 ];
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', 22222222 },
-];
 
 const user = {
   name: 'Tom Cook',
@@ -26,9 +21,18 @@ export const Header = () => {
   let navigate = useNavigate();
   const logout = () => {
     auth.signOut();
-    navigate('/');
+    navigate('/login');
   };
 
+  const userNavigation = [
+    { name: 'Your Profile', href: '/profile' },
+    {
+      name: 'Sign out',
+      action: () => {
+        logout();
+      },
+    },
+  ];
   return (
     <div className="bg-indigo-600 pb-32">
       <Disclosure as="nav" className="bg-indigo-600 border-b border-indigo-300 border-opacity-25 lg:border-none">
@@ -104,16 +108,30 @@ export const Header = () => {
                         <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                           {userNavigation.map(item => (
                             <Menu.Item key={item.name}>
-                              {({ active }) => (
-                                <a
-                                  href={item.href}
-                                  className={TailwindHelper.classNames(
-                                    active ? 'bg-gray-100' : '',
-                                    'block py-2 px-4 text-sm text-gray-700'
-                                  )}>
-                                  {item.name}
-                                </a>
-                              )}
+                              {({ active }) => {
+                                if (item.href) {
+                                  return (
+                                    <NavLink
+                                      to={item.href}
+                                      className={TailwindHelper.classNames(
+                                        active ? 'bg-gray-100' : '',
+                                        'block py-2 px-4 text-sm text-gray-700'
+                                      )}>
+                                      {item.name}
+                                    </NavLink>
+                                  );
+                                } else if (item.action) {
+                                  return (
+                                    <div
+                                      className="block py-2 px-4 text-sm text-gray-700 cursor-pointer"
+                                      onClick={item.action}>
+                                      {item.name}
+                                    </div>
+                                  );
+                                } else {
+                                  return <div>{item.name}</div>;
+                                }
+                              }}
                             </Menu.Item>
                           ))}
                         </Menu.Items>
