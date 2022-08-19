@@ -7,5 +7,5 @@ export const Test = () => {
   if (status === 'loading') {
     return <p>Fetching data...</p>;
   }
-  return <div>Hello {data.title}</div>;
+  return <div className='text-3xl font-bold underline'>Hello {data.title}</div>;
 };

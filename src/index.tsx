@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { FirebaseAppProvider } from 'reactfire';
+import { BrowserRouter } from 'react-router-dom';
 const firebaseConfig = {
   apiKey: 'AIzaSyCSBbPWvm_6Rw4MxWTlQM5H-gT3u4Tatz0',
   authDomain: 'nointerrupt-5d0da.firebaseapp.com',
@@ -13,13 +14,13 @@ const firebaseConfig = {
   appId: '1:892406402733:web:f2e511e7020e262e2ec024',
 };
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </FirebaseAppProvider>
   </React.StrictMode>
 );
