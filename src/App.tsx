@@ -3,12 +3,12 @@ import { getFirestore } from 'firebase/firestore';
 import { Route, Routes } from 'react-router-dom';
 import { AuthProvider, FirestoreProvider, useFirebaseApp } from 'reactfire';
 import './App.css';
-import AuthenticatedLayout from './AuthenticatedLayout';
-import { Dashboard } from './Dashboard';
-import Login from './Login';
-import { Queue } from './Queue';
-import Register from './Register';
-import Tickets from './Tickets';
+import AuthenticatedLayout from './Layout/AuthenticatedLayout';
+import { Dashboard } from './Pages/Dashboard';
+import Login from './Pages/Login';
+import { Queue } from './Pages/Queue';
+import Register from './Pages/Register';
+import Tickets from './Pages/Tickets';
 
 function App() {
   const firebaseApp = useFirebaseApp();

@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from 'reactfire';
 import * as yup from 'yup';
-import TailwindHelper from './tailwind-helper';
+import TailwindHelper from '../tailwind-helper';
 type LoginData = {
   email: string;
   password: string;
@@ -34,7 +34,6 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<LoginData>({ resolver: yupResolver(schema) });
 

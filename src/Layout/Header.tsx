@@ -3,7 +3,7 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { Fragment } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from 'reactfire';
-import TailwindHelper from './tailwind-helper';
+import TailwindHelper from '../tailwind-helper';
 const navigation = [
   { name: 'Home', href: '/', current: true },
   { name: 'My queue', href: '/queue', current: false },
