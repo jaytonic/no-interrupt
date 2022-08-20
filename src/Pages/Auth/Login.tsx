@@ -1,58 +1,44 @@
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from 'reactfire';
 import * as yup from 'yup';
-import TailwindHelper from '../tailwind-helper';
-import gravatarUrl from 'gravatar-url';
-
-type RegisterData = {
+import TailwindHelper from '../../tailwind-helper';
+type LoginData = {
   email: string;
   password: string;
-  displayName: string;
 };
 const schema = yup
   .object({
     email: yup.string().required().email(),
-    password: yup
-      .string()
-      .required()
-      .min(8, 'Password must be at least 8 characters long')
-      .test(
-        'password',
-        'Password must contain at least 1 uppercase, 1 lowercase, 1 number and 1 special character',
-        value => [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every(pattern => pattern.test(value ?? ''))
-      ),
-    displayName: yup.string().required(),
+    password: yup.string().required(),
   })
   .required();
 
-export default function Register() {
+export default function Login() {
   const auth = useAuth();
   let navigate = useNavigate();
+  const signIn = async (email: string, password: string) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      await navigate('/');
+    } catch (error: any) {
+      setServerError(error.message);
+      console.log(error);
+    }
+  };
   const [serverError, setServerError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterData>({ resolver: yupResolver(schema) });
-  const onSubmit: SubmitHandler<RegisterData> = data =>
-    registerWithPassword(data.email, data.password, data.displayName);
+  } = useForm<LoginData>({ resolver: yupResolver(schema) });
 
-  const registerWithPassword = (email: string, password: string, displayName: string) => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        updateProfile(userCredential.user, { photoURL: gravatarUrl(email), displayName });
-        navigate('/');
-        return true;
-      })
-      .catch(error => {
-        setServerError(error.message);
-      });
-  };
+  const onSubmit: SubmitHandler<LoginData> = data => signIn(data.email, data.password);
+
   return (
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -61,11 +47,11 @@ export default function Register() {
           src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
           alt="Workflow"
         />
-        <h2 className="mt-6 text-center text-3xl tracking-tight font-bold text-gray-900">Register</h2>
+        <h2 className="mt-6 text-center text-3xl tracking-tight font-bold text-gray-900">Sign in to your account</h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           Or{' '}
-          <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
-            sign-in
+          <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+            register
           </Link>
         </p>
       </div>
@@ -73,37 +59,6 @@ export default function Register() {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <label htmlFor="displayName" className="block text-sm font-medium text-gray-700">
-                Name
-              </label>
-              <div className="mt-1 relative">
-                <input
-                  id="displayName"
-                  type="text"
-                  autoComplete="name"
-                  required
-                  className={TailwindHelper.classNames(
-                    errors.displayName
-                      ? 'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
-                      : 'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500',
-                    'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
-                  )}
-                  {...register('displayName')}
-                />
-                {errors.displayName && (
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                  </div>
-                )}
-              </div>
-              {errors.displayName && (
-                <p className="mt-2 text-sm text-red-600" id="displayName-error">
-                  {errors.displayName?.message}
-                </p>
-              )}
-            </div>
-
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address
@@ -139,11 +94,11 @@ export default function Register() {
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
               </label>
-              <div className="mt-1">
+              <div className="mt-1 relative">
                 <input
                   id="password"
                   type="password"
-                  autoComplete="new-password"
+                  autoComplete="current-password"
                   required
                   className={TailwindHelper.classNames(
                     errors.password
@@ -159,9 +114,9 @@ export default function Register() {
                   </div>
                 )}
               </div>
-              {errors.email && (
-                <p className="mt-2 text-sm text-red-600" id="password-error">
-                  {errors.password?.message}
+              {errors.password && (
+                <p className="mt-2 text-sm text-red-600" id="email-error">
+                  {errors.email?.message}
                 </p>
               )}
             </div>
@@ -170,11 +125,20 @@ export default function Register() {
                 {serverError}
               </p>
             )}
+
+            <div className="flex items-center justify-between">
+              <div className="text-sm">
+                <Link to="password-lost" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Forgot your password?
+                </Link>
+              </div>
+            </div>
+
             <div>
               <button
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Register
+                Sign in
               </button>
             </div>
           </form>

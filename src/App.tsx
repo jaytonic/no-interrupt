@@ -5,11 +5,12 @@ import { AuthProvider, FirestoreProvider, useFirebaseApp } from 'reactfire';
 import './App.css';
 import AuthenticatedLayout from './Layout/AuthenticatedLayout';
 import { Dashboard } from './Pages/Dashboard';
-import Login from './Pages/Login';
-import { Queue } from './Pages/Queue';
-import Register from './Pages/Register';
+import Login from './Pages/Auth/Login';
+import { Queue } from './Pages/Queue/Queue';
+import Register from './Pages/Auth/Register';
 import Tickets from './Pages/Tickets';
 import { RequireAuth } from './Infrastructure/RequireAuth';
+import Edit from './Pages/Queue/Edit';
 
 function App() {
   const firebaseApp = useFirebaseApp();
@@ -34,6 +35,14 @@ function App() {
               element={
                 <RequireAuth>
                   <Queue></Queue>
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/edit"
+              element={
+                <RequireAuth>
+                  <Edit></Edit>
                 </RequireAuth>
               }
             />
