@@ -2,7 +2,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import { Fragment } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from 'reactfire';
+import { useAuth, useUser } from 'reactfire';
 import TailwindHelper from '../tailwind-helper';
 const navigation = [
   { name: 'Home', href: '/', current: true },
@@ -10,15 +10,11 @@ const navigation = [
   { name: 'My tickets', href: '/tickets', current: false },
 ];
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-};
 export const Header = () => {
+  const { status, data: user } = useUser();
   const auth = useAuth();
   let navigate = useNavigate();
+
   const logout = () => {
     auth.signOut();
     navigate('/login');
@@ -94,7 +90,7 @@ export const Header = () => {
                       <div>
                         <Menu.Button className="bg-indigo-600 rounded-full flex text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
-                          <img className="rounded-full h-8 w-8" src={user.imageUrl} alt="" />
+                          <img className="rounded-full h-8 w-8" src={user?.photoURL ?? ''} alt="" />
                         </Menu.Button>
                       </div>
                       <Transition
@@ -158,34 +154,36 @@ export const Header = () => {
                   </Disclosure.Button>
                 ))}
               </div>
-              <div className="pt-4 pb-3 border-t border-indigo-700">
-                <div className="px-5 flex items-center">
-                  <div className="flex-shrink-0">
-                    <img className="rounded-full h-10 w-10" src={user.imageUrl} alt="" />
+              {status === 'loading' && user && (
+                <div className="pt-4 pb-3 border-t border-indigo-700">
+                  <div className="px-5 flex items-center">
+                    <div className="flex-shrink-0">
+                      <img className="rounded-full h-10 w-10" src={user.photoURL ?? ''} alt="" />
+                    </div>
+                    <div className="ml-3">
+                      <div className="text-base font-medium text-white">{user.displayName}</div>
+                      <div className="text-sm font-medium text-indigo-300">{user.email}</div>
+                    </div>
+                    <button
+                      type="button"
+                      className="ml-auto bg-indigo-600 flex-shrink-0 rounded-full p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
+                      <span className="sr-only">View notifications</span>
+                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
                   </div>
-                  <div className="ml-3">
-                    <div className="text-base font-medium text-white">{user.name}</div>
-                    <div className="text-sm font-medium text-indigo-300">{user.email}</div>
+                  <div className="mt-3 px-2 space-y-1">
+                    {userNavigation.map(item => (
+                      <Disclosure.Button
+                        key={item.name}
+                        as="a"
+                        href={item.href}
+                        className="block rounded-md py-2 px-3 text-base font-medium text-white hover:bg-indigo-500 hover:bg-opacity-75">
+                        {item.name}
+                      </Disclosure.Button>
+                    ))}
                   </div>
-                  <button
-                    type="button"
-                    className="ml-auto bg-indigo-600 flex-shrink-0 rounded-full p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-600 focus:ring-white">
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
                 </div>
-                <div className="mt-3 px-2 space-y-1">
-                  {userNavigation.map(item => (
-                    <Disclosure.Button
-                      key={item.name}
-                      as="a"
-                      href={item.href}
-                      className="block rounded-md py-2 px-3 text-base font-medium text-white hover:bg-indigo-500 hover:bg-opacity-75">
-                      {item.name}
-                    </Disclosure.Button>
-                  ))}
-                </div>
-              </div>
+              )}
             </Disclosure.Panel>
           </>
         )}

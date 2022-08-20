@@ -1,16 +1,18 @@
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from 'reactfire';
 import * as yup from 'yup';
 import TailwindHelper from '../tailwind-helper';
+import gravatarUrl from 'gravatar-url';
 
 type RegisterData = {
   email: string;
   password: string;
+  displayName: string;
 };
 const schema = yup
   .object({
@@ -24,6 +26,7 @@ const schema = yup
         'Password must contain at least 1 uppercase, 1 lowercase, 1 number and 1 special character',
         value => [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every(pattern => pattern.test(value ?? ''))
       ),
+    displayName: yup.string().required(),
   })
   .required();
 
@@ -36,11 +39,13 @@ export default function Register() {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterData>({ resolver: yupResolver(schema) });
-  const onSubmit: SubmitHandler<RegisterData> = data => registerWithPassword(data.email, data.password);
+  const onSubmit: SubmitHandler<RegisterData> = data =>
+    registerWithPassword(data.email, data.password, data.displayName);
 
-  const registerWithPassword = (email: string, password: string) => {
+  const registerWithPassword = (email: string, password: string, displayName: string) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
+        updateProfile(userCredential.user, { photoURL: gravatarUrl(email), displayName });
         navigate('/');
         return true;
       })
@@ -68,6 +73,37 @@ export default function Register() {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <label htmlFor="displayName" className="block text-sm font-medium text-gray-700">
+                Name
+              </label>
+              <div className="mt-1 relative">
+                <input
+                  id="displayName"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  className={TailwindHelper.classNames(
+                    errors.displayName
+                      ? 'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
+                      : 'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500',
+                    'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
+                  )}
+                  {...register('displayName')}
+                />
+                {errors.displayName && (
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                  </div>
+                )}
+              </div>
+              {errors.displayName && (
+                <p className="mt-2 text-sm text-red-600" id="displayName-error">
+                  {errors.displayName?.message}
+                </p>
+              )}
+            </div>
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address

@@ -3,7 +3,6 @@ import { useSigninCheck } from 'reactfire';
 
 export const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const { status, data: signInCheckResult } = useSigninCheck();
-  console.log(signInCheckResult);
   if (status === 'loading') {
     return <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24"></svg>;
   }
