@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
+import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { FirebaseAppProvider } from 'reactfire';
 import { BrowserRouter } from 'react-router-dom';
+import { FirebaseAppProvider } from 'reactfire';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyCSBbPWvm_6Rw4MxWTlQM5H-gT3u4Tatz0',
   authDomain: 'nointerrupt-5d0da.firebaseapp.com',
@@ -13,7 +14,6 @@ const firebaseConfig = {
   messagingSenderId: '892406402733',
   appId: '1:892406402733:web:f2e511e7020e262e2ec024',
 };
-
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>

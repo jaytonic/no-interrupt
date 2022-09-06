@@ -1,4 +1,5 @@
-import { ExclamationCircleIcon } from '@heroicons/react/solid';
+import React from 'react';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useState } from 'react';
@@ -6,7 +7,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from 'reactfire';
 import * as yup from 'yup';
-import TailwindHelper from '../../tailwind-helper';
 import gravatarUrl from 'gravatar-url';
 
 type RegisterData = {
@@ -30,7 +30,7 @@ const schema = yup
   })
   .required();
 
-export default function Register() {
+export const Register = () => {
   const auth = useAuth();
   let navigate = useNavigate();
   const [serverError, setServerError] = useState<string | null>(null);
@@ -45,7 +45,10 @@ export default function Register() {
   const registerWithPassword = (email: string, password: string, displayName: string) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
-        updateProfile(userCredential.user, { photoURL: gravatarUrl(email), displayName });
+        updateProfile(userCredential.user, {
+          photoURL: gravatarUrl(email),
+          displayName,
+        });
         navigate('/');
         return true;
       })
@@ -83,17 +86,17 @@ export default function Register() {
                   type="text"
                   autoComplete="name"
                   required
-                  className={TailwindHelper.classNames(
-                    errors.displayName
-                      ? 'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
-                      : 'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500',
-                    'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
-                  )}
+                  className={
+                    'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
+                  }
                   {...register('displayName')}
                 />
                 {errors.displayName && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    {/* <ExclamationCircleIcon
+                      className='h-5 w-5 text-red-500'
+                      aria-hidden='true'
+                    /> */}
                   </div>
                 )}
               </div>
@@ -114,17 +117,17 @@ export default function Register() {
                   type="email"
                   autoComplete="email"
                   required
-                  className={TailwindHelper.classNames(
-                    errors.email
-                      ? 'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
-                      : 'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500',
-                    'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
-                  )}
+                  className={
+                    'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
+                  }
                   {...register('email')}
                 />
                 {errors.email && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    {/* <ExclamationCircleIcon
+                      className='h-5 w-5 text-red-500'
+                      aria-hidden='true'
+                    /> */}
                   </div>
                 )}
               </div>
@@ -145,17 +148,23 @@ export default function Register() {
                   type="password"
                   autoComplete="new-password"
                   required
-                  className={TailwindHelper.classNames(
-                    errors.password
-                      ? 'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
-                      : 'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500',
-                    'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
-                  )}
+                  className={
+                    'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
+                  }
+                  // className={TailwindHelper.classNames(
+                  //    errors.password
+                  //      ? 'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
+                  //      : 'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500',
+                  //    'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
+                  //  )}
                   {...register('password')}
                 />
                 {errors.password && (
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    {/* <ExclamationCircleIcon
+                      className='h-5 w-5 text-red-500'
+                      aria-hidden='true'
+                    /> */}
                   </div>
                 )}
               </div>
@@ -236,4 +245,4 @@ export default function Register() {
       </div>
     </div>
   );
-}
+};

@@ -1,16 +1,15 @@
-import { browserLocalPersistence, getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { Route, Routes } from 'react-router-dom';
-import { AuthProvider, FirestoreProvider, useFirebaseApp } from 'reactfire';
+import { Route, Routes } from 'react-router';
 import './App.css';
-import AuthenticatedLayout from './Layout/AuthenticatedLayout';
-import { Dashboard } from './Pages/Dashboard';
-import Login from './Pages/Auth/Login';
-import { Queue } from './Pages/Queue/Queue';
-import Register from './Pages/Auth/Register';
-import Tickets from './Pages/Tickets';
+import { AuthenticatedLayout } from './layout/AuthenticatedLayout';
+import { PlainLayout } from './layout/PlainLayout';
+import { Dashboard } from './pages/Dashboard';
+import { Login } from './pages/Login';
+import { Queue } from './pages/Queue';
+import { AuthProvider, FirestoreProvider, useFirebaseApp } from 'reactfire';
+import { getFirestore } from 'firebase/firestore';
+import { browserLocalPersistence, getAuth } from 'firebase/auth';
+import { Register } from './pages/Register';
 import { RequireAuth } from './Infrastructure/RequireAuth';
-import Edit from './Pages/Queue/Edit';
 
 function App() {
   const firebaseApp = useFirebaseApp();
@@ -20,44 +19,29 @@ function App() {
   return (
     <FirestoreProvider sdk={firestoreInstance}>
       <AuthProvider sdk={auth}>
-        <Routes>
-          <Route path="/" element={<AuthenticatedLayout></AuthenticatedLayout>}>
-            <Route
-              path="/"
-              element={
-                <RequireAuth>
-                  <Dashboard></Dashboard>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/queue"
-              element={
-                <RequireAuth>
-                  <Queue></Queue>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/edit"
-              element={
-                <RequireAuth>
-                  <Edit></Edit>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/tickets"
-              element={
-                <RequireAuth>
-                  <Tickets />
-                </RequireAuth>
-              }
-            />
-          </Route>
-          <Route path="/login" element={<Login></Login>}></Route>
-          <Route path="/register" element={<Register></Register>}></Route>
-        </Routes>
+        <div className="min-h-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col">
+          <Routes>
+            <Route path="/" element={<AuthenticatedLayout></AuthenticatedLayout>}>
+              <Route
+                path=""
+                element={
+                  <RequireAuth>
+                    <Dashboard></Dashboard>
+                  </RequireAuth>
+                }></Route>
+              <Route
+                path="queue"
+                element={
+                  <RequireAuth>
+                    <Queue></Queue>
+                  </RequireAuth>
+                }></Route>
+            </Route>
+
+            <Route path="login" element={<Login></Login>}></Route>
+            <Route path="register" element={<Register></Register>}></Route>
+          </Routes>
+        </div>
       </AuthProvider>
     </FirestoreProvider>
   );
