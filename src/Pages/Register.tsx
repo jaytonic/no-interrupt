@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from 'reactfire';
 import * as yup from 'yup';
 import gravatarUrl from 'gravatar-url';
+import { FormInput } from '../components/FormInput';
 
 type RegisterData = {
   email: string;
@@ -76,104 +77,31 @@ export const Register = () => {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <label htmlFor="displayName" className="block text-sm font-medium text-gray-700">
-                Name
-              </label>
-              <div className="mt-1 relative">
-                <input
-                  id="displayName"
-                  type="text"
-                  autoComplete="name"
-                  required
-                  className={
-                    'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
-                  }
-                  {...register('displayName')}
-                />
-                {errors.displayName && (
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    {/* <ExclamationCircleIcon
-                      className='h-5 w-5 text-red-500'
-                      aria-hidden='true'
-                    /> */}
-                  </div>
-                )}
-              </div>
-              {errors.displayName && (
-                <p className="mt-2 text-sm text-red-600" id="displayName-error">
-                  {errors.displayName?.message}
-                </p>
-              )}
-            </div>
+            <FormInput
+              autoComplete="name"
+              inputId="displayName"
+              inputType="text"
+              errors={errors}
+              formField="displayName"
+              label="Name"
+              register={register}></FormInput>
+            <FormInput
+              autoComplete="email"
+              inputId="email"
+              inputType="email"
+              errors={errors}
+              formField="email"
+              label="Email address"
+              register={register}></FormInput>
+            <FormInput
+              autoComplete="new-password"
+              inputId="password"
+              inputType="password"
+              errors={errors}
+              formField="password"
+              label="Password"
+              register={register}></FormInput>
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
-              </label>
-              <div className="mt-1 relative">
-                <input
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className={
-                    'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
-                  }
-                  {...register('email')}
-                />
-                {errors.email && (
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    {/* <ExclamationCircleIcon
-                      className='h-5 w-5 text-red-500'
-                      aria-hidden='true'
-                    /> */}
-                  </div>
-                )}
-              </div>
-              {errors.email && (
-                <p className="mt-2 text-sm text-red-600" id="email-error">
-                  {errors.email?.message}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  className={
-                    'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
-                  }
-                  // className={TailwindHelper.classNames(
-                  //    errors.password
-                  //      ? 'border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500'
-                  //      : 'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500',
-                  //    'appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400  sm:text-sm'
-                  //  )}
-                  {...register('password')}
-                />
-                {errors.password && (
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    {/* <ExclamationCircleIcon
-                      className='h-5 w-5 text-red-500'
-                      aria-hidden='true'
-                    /> */}
-                  </div>
-                )}
-              </div>
-              {errors.email && (
-                <p className="mt-2 text-sm text-red-600" id="password-error">
-                  {errors.password?.message}
-                </p>
-              )}
-            </div>
             {serverError && (
               <p className="mt-2 text-sm text-red-600" id="server-error">
                 {serverError}

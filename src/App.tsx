@@ -1,15 +1,14 @@
+import { browserLocalPersistence, getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 import { Route, Routes } from 'react-router';
+import { AuthProvider, FirestoreProvider, useFirebaseApp } from 'reactfire';
 import './App.css';
+import { RequireAuth } from './Infrastructure/RequireAuth';
 import { AuthenticatedLayout } from './layout/AuthenticatedLayout';
-import { PlainLayout } from './layout/PlainLayout';
 import { Dashboard } from './pages/Dashboard';
 import { Login } from './pages/Login';
 import { Queue } from './pages/Queue';
-import { AuthProvider, FirestoreProvider, useFirebaseApp } from 'reactfire';
-import { getFirestore } from 'firebase/firestore';
-import { browserLocalPersistence, getAuth } from 'firebase/auth';
 import { Register } from './pages/Register';
-import { RequireAuth } from './Infrastructure/RequireAuth';
 
 function App() {
   const firebaseApp = useFirebaseApp();
