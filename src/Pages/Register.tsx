@@ -1,7 +1,13 @@
 import React from 'react';
 import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { createUserWithEmailAndPassword, GithubAuthProvider, GoogleAuthProvider, signInWithPopup, updateProfile } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
+} from 'firebase/auth';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,6 +17,7 @@ import gravatarUrl from 'gravatar-url';
 import { FormInput } from '../components/FormInput';
 import { Alink } from '../components/Alink';
 import { ButtonIcon } from '../components/ButtonIcon';
+import { Button } from '../components/Button';
 
 type RegisterData = {
   email: string;
@@ -126,11 +133,7 @@ export const Register = () => {
               </p>
             )}
             <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Register
-              </button>
+              <Button label="Register" type="submit"></Button>
             </div>
           </form>
 

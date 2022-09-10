@@ -2,9 +2,8 @@ import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
-export interface FormInputPropsModel {
+export interface TextAreaProps {
   label: String;
-  inputType: string;
   inputId: string;
   autoComplete?: string;
   register: UseFormRegister<any>;
@@ -12,15 +11,7 @@ export interface FormInputPropsModel {
   formField: string;
 }
 
-export const FormInput = ({
-  label,
-  inputType,
-  inputId,
-  autoComplete,
-  register,
-  errors,
-  formField,
-}: FormInputPropsModel) => {
+export const TextArea = ({ label, inputId, autoComplete, register, errors, formField }: TextAreaProps) => {
   return (
     <div>
       {' '}
@@ -28,9 +19,8 @@ export const FormInput = ({
         {label}
       </label>
       <div className="mt-1 relative">
-        <input
+        <textarea
           id={inputId}
-          type={inputType}
           autoComplete={autoComplete}
           required
           className={

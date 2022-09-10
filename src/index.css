@@ -10,3 +10,29 @@ App {
   margin: 0;
   padding: 0;
 }
+div.react-toggle--checked .react-toggle-track {
+  @apply bg-primary-500;
+}
+div.react-toggle--checked .react-toggle-thumb {
+  @apply border-primary-500;
+}
+div.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+  @apply bg-primary-700 !important;
+}
+
+div.react-toggle-track {
+  @apply bg-slate-300;
+}
+div.react-toggle-thumb {
+  @apply border-slate-300;
+}
+div.react-toggle:hover:not(.react-toggle--disabled) .react-toggle-track {
+  @apply bg-slate-700;
+}
+div.react-toggle--focus .react-toggle-thumb {
+  @apply shadow-indigo-500 shadow-lg;
+}
+
+div.react-toggle:active:not(.react-toggle--disabled) .react-toggle-thumb {
+  @apply shadow-indigo-500 shadow-lg;
+}
