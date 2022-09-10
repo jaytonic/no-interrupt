@@ -9,6 +9,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormInput } from '../components/FormInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { Button } from '../components/Button';
+import { Alink } from '../components/Alink';
 
 type LoginData = {
   email: string;
@@ -51,10 +53,7 @@ export const Login = () => {
         />
         <h2 className="mt-6 text-center text-3xl tracking-tight font-bold text-gray-900">Sign in to your account</h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          Or{' '}
-          <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-            register
-          </Link>
+          Or <Alink to="/register">register</Alink>
         </p>
       </div>
 
@@ -86,18 +85,12 @@ export const Login = () => {
 
             <div className="flex items-center justify-between">
               <div className="text-sm">
-                <Link to="password-lost" className="font-medium text-indigo-600 hover:text-indigo-500">
-                  Forgot your password?
-                </Link>
+                <Alink to="password-lost">Forgot your password</Alink>
               </div>
             </div>
 
             <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Sign in
-              </button>
+              <Button label="Sign in" type="submit"></Button>
             </div>
           </form>
 

@@ -9,6 +9,7 @@ import { useAuth } from 'reactfire';
 import * as yup from 'yup';
 import gravatarUrl from 'gravatar-url';
 import { FormInput } from '../components/FormInput';
+import { Alink } from '../components/Alink';
 
 type RegisterData = {
   email: string;
@@ -68,9 +69,9 @@ export const Register = () => {
         <h2 className="mt-6 text-center text-3xl tracking-tight font-bold text-gray-900">Register</h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           Or{' '}
-          <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+          <Alink to="/login" >
             sign-in
-          </Link>
+          </Alink>
         </p>
       </div>
 
