@@ -36,3 +36,7 @@ div.react-toggle--focus .react-toggle-thumb {
 div.react-toggle:active:not(.react-toggle--disabled) .react-toggle-thumb {
   @apply shadow-indigo-500 shadow-lg;
 }
+body {
+  background: rgb(29,78,216);
+  background: linear-gradient(160deg, rgba(29,78,216,1) 0%, rgba(233,64,87,1) 60%, rgba(242,113,33,1) 100%);
+}

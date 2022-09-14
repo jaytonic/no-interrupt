@@ -1,7 +1,10 @@
-import React from 'react'
+import React from 'react';
+import { Title } from '../components/Title';
 
 export const Queue = () => {
   return (
-    <div>Queue</div>
-  )
-}
+    <div>
+      <Title title="Queue"></Title>
+    </div>
+  );
+};

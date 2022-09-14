@@ -1,10 +1,10 @@
 import React from 'react';
 import { Title } from '../components/Title';
 
-export const Dashboard = () => {
+export const Tickets = () => {
   return (
     <div>
-      <Title title="Dashboard"></Title>
+      <Title title="Tickets"></Title>
     </div>
   );
 };

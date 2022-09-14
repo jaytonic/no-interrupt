@@ -10,6 +10,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Login } from './pages/Login';
 import { Queue } from './pages/Queue';
 import { Register } from './pages/Register';
+import { Tickets } from './pages/Tickets';
 
 function App() {
   const firebaseApp = useFirebaseApp();
@@ -19,7 +20,7 @@ function App() {
   return (
     <FirestoreProvider sdk={firestoreInstance}>
       <AuthProvider sdk={auth}>
-        <div className="min-h-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col">
+        <div className="min-h-full 0 flex flex-col">
           <Routes>
             <Route path="/" element={<AuthenticatedLayout></AuthenticatedLayout>}>
               <Route
@@ -34,6 +35,13 @@ function App() {
                 element={
                   <RequireAuth>
                     <Queue></Queue>
+                  </RequireAuth>
+                }></Route>
+              <Route
+                path="tickets"
+                element={
+                  <RequireAuth>
+                    <Tickets></Tickets>
                   </RequireAuth>
                 }></Route>
               <Route

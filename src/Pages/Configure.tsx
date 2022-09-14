@@ -9,6 +9,7 @@ import { Button } from '../components/Button';
 import { FormInput } from '../components/FormInput';
 import { Switch } from '../components/Switch';
 import { TextArea } from '../components/TextArea';
+import { Title } from '../components/Title';
 
 type ConfigureData = {
   title: string;
@@ -44,10 +45,14 @@ export const Configure = () => {
     formState: { errors },
   } = useForm<ConfigureData>({ resolver: yupResolver(schema), defaultValues: { isWorkingMonday: true } });
   const onSubmit: SubmitHandler<ConfigureData> = updatedData => {
-    if (data === undefined) {
-      setDoc(ref, updatedData);
-    } else {
-      updateDoc(ref, updatedData);
+    try {
+      if (data === undefined) {
+        setDoc(ref, updatedData);
+      } else {
+        updateDoc(ref, updatedData);
+      }
+    } catch (ex: any) {
+      setServerError(ex.message);
     }
   };
 
@@ -74,7 +79,7 @@ export const Configure = () => {
   }
   return (
     <div>
-      <h2 className="text-xl font-bold my-3">Configure your tickets queue</h2>
+      <Title title="Configure your tickets queue"></Title>
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           errors={errors}
@@ -98,6 +103,11 @@ export const Configure = () => {
             </div>
           ))}
         </div>
+        {serverError && (
+          <p className="mt-2 text-sm text-red-600" id="server-error">
+            {serverError}
+          </p>
+        )}
         <Button label="Save" type="submit"></Button>
       </form>
     </div>
