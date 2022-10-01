@@ -1,0 +1,1 @@
+<template>Queues</template>
