@@ -4,6 +4,7 @@ import MyQueueView from '@/views/MyQueueView.vue';
 import MyTicketsView from '@/views/MyTicketsView.vue';
 import QueuesView from '@/views/QueuesView.vue';
 import AuthView from '@/views/AuthView.vue';
+import EmptyLayout from '@/layouts/EmptyLayout.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,10 +20,11 @@ const router = createRouter({
       ],
     },
     {
-      path:'/auth',
-      name:'Auth',
-      component: AuthView
-    }
+      path: '/auth',
+      name: 'Auth',
+      component: EmptyLayout,
+      children: [{ path: '', component: AuthView }],
+    },
   ],
 });
 
