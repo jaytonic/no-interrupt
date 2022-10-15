@@ -1,3 +1,4 @@
+import { Ticket } from './../model/ticket.model';
 import { defineStore } from 'pinia';
 import {
   collection,
@@ -13,91 +14,86 @@ import {
   CollectionReference,
   type DocumentData,
   DocumentReference,
+  setDoc,
 } from 'firebase/firestore';
 import { db } from '@/js/firebase';
 import { useStoreAuth } from '@/stores/storeAuth';
 import type { Queue } from '@/model/queue.model';
 
-export type QueuesState = {
-  queues: Queue[];
-  queuesLoaded: boolean;
+export type MyQueueState = {
+  myQueue: Queue | null;
+  myQueueLoaded: boolean;
 };
-let queueCollectionRef: CollectionReference<DocumentData>;
-let queuesCollectionQuery: Query<DocumentData>;
+let myQueueRef: DocumentReference<DocumentData>;
 
 let getQueuesSnapshot: Unsubscribe | null = null;
 
-export const useStoreNotes = defineStore('storeQueues', {
+export const useMyQueueStore = defineStore('myQueueStore', {
   state: () => {
     return {
-      queues: [],
-      queuesLoaded: false,
-    } as QueuesState;
+      myQueue: null,
+      myQueueLoaded: false,
+    } as MyQueueState;
   },
   actions: {
-    init() {
-      // const storeAuth = useStoreAuth();
+    async init() {
+      const storeAuth = useStoreAuth();
 
-      //notesCollectionRef = collection(db, 'queues', storeAuth.user.id, 'notes');
-      queueCollectionRef = collection(db, 'queues');
-      queuesCollectionQuery = query(queueCollectionRef, orderBy('title', 'asc'));
-      this.getNotes();
+      if (storeAuth.user) {
+        myQueueRef = doc(db, 'queues', storeAuth.user.id);
+        await this.getMyQueue();
+      }
     },
-    async getNotes() {
-      this.queuesLoaded = false;
+    async getMyQueue() {
+      this.myQueue = null;
+      this.myQueueLoaded = false;
 
       if (getQueuesSnapshot) getQueuesSnapshot(); // unsubscribe from any active listener
 
       getQueuesSnapshot = onSnapshot<DocumentData>(
-        queuesCollectionQuery,
-        (queuesSnapshot: any) => {
-          let queues: Queue[] = [];
-          queuesSnapshot.forEach((doc: any) => {
-            let queue: Queue = {
-              id: doc.id,
-              title: doc.data().title,
-              description: doc.data().description,
-              queueOpen: doc.data().queueOpen,
-            };
-            queues.push(queue);
-          });
-          this.queues = queues;
-          this.queuesLoaded = true;
+        myQueueRef,
+        (doc: any) => {
+          this.myQueue = {
+            id: doc.id,
+            title: doc.data().title,
+            description: doc.data().description,
+            queueDuration: doc.data().queueDuration,
+          };
+          this.myQueueLoaded = true;
         },
         error => {
           console.log('error.message: ', error.message);
         }
       );
     },
-    clearNotes() {
-      this.queues = [];
-    },
-    async addNote(newQueue: Queue) {
-      let currentDate = new Date().getTime(),
-        date = currentDate.toString();
+    // clearNotes() {
+    //   this.queues = [];
+    // },
+    // async addNote(newQueue: Queue) {
+    //   let currentDate = new Date().getTime(),
+    //     date = currentDate.toString();
 
-      await addDoc(queueCollectionRef, {
-        ...newQueue,
-        date,
-      });
-    },
-    async deleteNote(idToDelete: string) {
-      await deleteDoc(doc(queueCollectionRef, idToDelete));
-    },
-    async updateNote(id: string, queue: Queue) {
-      await updateDoc(doc(queueCollectionRef, id), {
-        ...queue,
-      });
+    //   await addDoc(queueCollectionRef, {
+    //     ...newQueue,
+    //     date,
+    //   });
+    // },
+    // async deleteNote(idToDelete: string) {
+    //   await deleteDoc(doc(queueCollectionRef, idToDelete));
+    // },
+    async updateNote(queue: Queue) {
+      await setDoc(myQueueRef,queue);
+
     },
   },
   getters: {
-    getQueue: state => {
-      return (id: string) => {
-        return state.queues.filter(queue => queue.id === id)[0];
-      };
-    },
-    totalQueuesCount: state => {
-      return state.queues.length;
-    },
+    // getQueue: state => {
+    //   return (id: string) => {
+    //     return state.queues.filter(queue => queue.id === id)[0];
+    //   };
+    // },
+    // totalQueuesCount: state => {
+    //   return state.queues.length;
+    // },
   },
 });
