@@ -1,1 +1,107 @@
-/* You can add global styles to this file, and also import other style files */
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  background: rgb(29, 78, 216);
+  background: linear-gradient(
+    160deg,
+    rgba(29, 78, 216, 1) 0%,
+    rgba(233, 64, 87, 1) 60%,
+    rgba(242, 113, 33, 1) 100%
+  );
+}
+
+//Max width complement framework(tailwind inspired)
+.max-w-0 {
+  max-width: 0rem;
+}
+.max-w-none {
+  max-width: none;
+}
+.max-w-xs {
+  max-width: 20rem; /* 320px */
+}
+.max-w-sm {
+  max-width: 24rem; /* 384px */
+}
+.max-w-md {
+  max-width: 28rem; /* 448px */
+}
+.max-w-lg {
+  max-width: 32rem; /* 512px */
+}
+.max-w-xl {
+  max-width: 36rem; /* 576px */
+}
+.max-w-2xl {
+  max-width: 42rem; /* 672px */
+}
+.max-w-3xl {
+  max-width: 48rem; /* 768px */
+}
+.max-w-4xl {
+  max-width: 56rem; /* 896px */
+}
+.max-w-5xl {
+  max-width: 64rem; /* 1024px */
+}
+.max-w-6xl {
+  max-width: 72rem; /* 1152px */
+}
+.max-w-full {
+  max-width: 80rem; /* 1280px */
+}
+.max-w-screen-sm {
+  max-width: 40rem; /* 640px */
+}
+.max-w-screen-md {
+  max-width: 48rem; /* 768px */
+}
+.max-w-screen-lg {
+  max-width: 64rem; /* 1024px */
+}
+.max-w-screen-xl {
+  max-width: 80rem; /* 1280px */
+}
+.max-w-screen-2xl {
+  max-width: 96rem; /* 1536px */
+}
+
+//Backdrop filter
+.backdrop-blur-none {
+  backdrop-filter: blur(0);
+}
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+.backdrop-blur {
+  backdrop-filter: blur(8px);
+}
+.backdrop-blur-md {
+  backdrop-filter: blur(12px);
+}
+.backdrop-blur-lg {
+  backdrop-filter: blur(16px);
+}
+.backdrop-blur-xl {
+  backdrop-filter: blur(24px);
+}
+.backdrop-blur-2xl {
+  backdrop-filter: blur(40px);
+}
+.backdrop-blur-3xl {
+  backdrop-filter: blur(64px);
+}

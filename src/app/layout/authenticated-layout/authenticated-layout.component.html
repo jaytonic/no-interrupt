@@ -1,0 +1,18 @@
+<!-- <div class="flex justify-content-center h-full">
+  <div class="w-10 h-full flex flex-column">
+    <header class="flex flex-column flex-grow-0 align-items-stretch">
+      <app-header></app-header>
+    </header>
+    <div class="flex flex-column align-items-stretch flex-grow-1">
+      <div class="bg-white border-round-lg p-3 max-w-screen-lg shadow-6 h-full">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="container min-h-screen">
+  <app-header class="header"></app-header>
+  <div class="content bg-white border-round-lg p-3 mb-3 max-w-screen-lg shadow-6">
+    <router-outlet></router-outlet>
+  </div>
+</div>

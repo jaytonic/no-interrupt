@@ -1,0 +1,17 @@
+.container {
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
+  grid-template-rows: min-content auto;
+}
+.header {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+.content {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
