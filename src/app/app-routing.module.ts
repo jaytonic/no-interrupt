@@ -2,6 +2,7 @@ import { PlainLayoutComponent } from './layout/plain-layout/plain-layout.compone
 import { AuthenticatedLayoutComponent } from './layout/authenticated-layout/authenticated-layout.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
 const routes: Routes = [
   {
@@ -19,6 +20,8 @@ const routes: Routes = [
           import('./queues/queues.module').then((m) => m.QueuesModule),
       },
     ],
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: () => redirectUnauthorizedTo(['auth']) },
   },
   {
     path: 'auth',

@@ -1,1 +1,58 @@
-<div class="h-full min-h-screen">login works!</div>
+<div class="h-full min-h-screen flex justify-content-center align-items-center">
+  <p-card class="w-10 max-w-lg">
+    <div class="text-900 text-3xl font-medium mb-3 text-center">
+      Please authenticate
+    </div>
+    <p-tabView class="centered">
+      <p-tabPanel header="Login">
+        <form class="flex flex-column">
+          <div class="field h-full">
+            <label>Email</label>
+            <span class="p-input-icon-left w-full">
+              <i class="fa-regular fa-at"></i>
+              <input class="w-full" type="text" pInputText />
+            </span>
+          </div>
+          <div class="field h-full">
+            <label>Password</label>
+            <span class="p-input-icon-left w-full">
+              <i class="fa-regular fa-key"></i>
+              <input
+                class="w-full"
+                type="password"
+                pPassword
+                [feedback]="false"
+              />
+            </span>
+          </div>
+          <button
+            pButton
+            type="submit"
+            label="Sign In"
+            icon="fa-regular fa-user-unlock"
+          ></button>
+          <p-divider type="dashed" align="center">
+            <span>or</span>
+          </p-divider>
+          <div class="flex justify-content-between">
+            <button
+              pButton
+              type="button"
+              label="Sign in with Google"
+              class="p-button-danger"
+              icon="fa-brands fa-google"
+            ></button>
+            <button
+              pButton
+              type="button"
+              label="Sign in with Github"
+              class="p-button-secondary"
+              icon="fa-brands fa-github"
+            ></button>
+          </div>
+        </form>
+      </p-tabPanel>
+      <p-tabPanel header="Register"> Register </p-tabPanel>
+    </p-tabView></p-card
+  >
+</div>
