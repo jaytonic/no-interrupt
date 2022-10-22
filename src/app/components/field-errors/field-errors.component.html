@@ -1,0 +1,17 @@
+<div *ngIf="formField && formField.touched && formField.errors">
+  <div *ngFor="let validationError of objectKeys(formField.errors)">
+    <app-field-error *ngIf="validationError == 'email'">
+      The email is invalid
+    </app-field-error>
+    <app-field-error *ngIf="validationError == 'pattern'">
+      Invalid {{ fieldName }}
+    </app-field-error>
+    <app-field-error *ngIf="validationError == 'required'">
+      The {{ fieldName }} is mandatory
+    </app-field-error>
+    <app-field-error *ngIf="validationError == 'minlength'">
+      The {{ fieldName }} must be at least
+      {{ formField.errors[validationError].requiredLength }} character long
+    </app-field-error>
+  </div>
+</div>

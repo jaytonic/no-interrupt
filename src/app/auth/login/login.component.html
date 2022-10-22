@@ -5,13 +5,26 @@
     </div>
     <p-tabView class="centered">
       <p-tabPanel header="Login">
-        <form class="flex flex-column">
+        <form
+          class="flex flex-column"
+          [formGroup]="loginForm"
+          (ngSubmit)="onLogin()"
+        >
           <div class="field h-full">
             <label>Email</label>
             <span class="p-input-icon-left w-full">
               <i class="fa-regular fa-at"></i>
-              <input class="w-full" type="text" pInputText />
+              <input
+                class="w-full"
+                type="text"
+                pInputText
+                formControlName="email"
+              />
             </span>
+            <app-field-errors
+              [formField]="loginForm.controls['email']"
+              fieldName="Email"
+            ></app-field-errors>
           </div>
           <div class="field h-full">
             <label>Password</label>
@@ -22,8 +35,21 @@
                 type="password"
                 pPassword
                 [feedback]="false"
+                formControlName="password"
               />
             </span>
+            <app-field-errors
+              [formField]="loginForm.controls['password']"
+              fieldName="Password"
+            ></app-field-errors>
+          </div>
+          <div>
+            <app-field-error
+              *ngIf="invalidLoginCredentials"
+              class="text-base flex justify-content-center mb-3"
+            >
+              Invalid credentials
+            </app-field-error>
           </div>
           <button
             pButton
@@ -31,28 +57,114 @@
             label="Sign In"
             icon="fa-regular fa-user-unlock"
           ></button>
-          <p-divider type="dashed" align="center">
-            <span>or</span>
+          <p-divider align="center" class="m-3">
+            <span>or sign in with...</span>
           </p-divider>
-          <div class="flex justify-content-between">
+          <div class="flex justify-content-evenly">
             <button
               pButton
               type="button"
-              label="Sign in with Google"
-              class="p-button-danger"
+              style="background-color: #dd4b39"
               icon="fa-brands fa-google"
+              (click)="loginWithGoogle()"
             ></button>
             <button
               pButton
               type="button"
-              label="Sign in with Github"
-              class="p-button-secondary"
+              style="background-color: #1877f2"
+              icon="fa-brands fa-facebook"
+              (click)="loginWithFacebook()"
+            ></button>
+            <button
+              pButton
+              type="button"
+              style="background-color: #333"
               icon="fa-brands fa-github"
+              (click)="loginWithGithub()"
             ></button>
           </div>
         </form>
       </p-tabPanel>
-      <p-tabPanel header="Register"> Register </p-tabPanel>
-    </p-tabView></p-card
-  >
+      <p-tabPanel header="Register">
+        <form
+          class="flex flex-column"
+          [formGroup]="registerForm"
+          (ngSubmit)="onRegister()"
+        >
+          <div class="field h-full">
+            <label>Email</label>
+            <span class="p-input-icon-left w-full">
+              <i class="fa-regular fa-at"></i>
+              <input
+                class="w-full"
+                type="text"
+                pInputText
+                formControlName="email"
+              />
+            </span>
+            <app-field-errors
+              [formField]="registerForm.controls['email']"
+              fieldName="Email"
+            ></app-field-errors>
+          </div>
+          <div class="field h-full">
+            <label>Password</label>
+            <span class="p-input-icon-left w-full">
+              <i class="fa-regular fa-key"></i>
+              <input
+                class="w-full"
+                type="password"
+                pPassword
+                [feedback]="false"
+                formControlName="password"
+              />
+            </span>
+            <app-field-errors
+              [formField]="registerForm.controls['password']"
+              fieldName="Password"
+            ></app-field-errors>
+          </div>
+          <div>
+            <app-field-error
+              *ngIf="invalidRegisterCredentials"
+              class="text-base flex justify-content-center mb-3"
+            >
+              Invalid credentials
+            </app-field-error>
+          </div>
+          <button
+            pButton
+            type="submit"
+            label="Register"
+            icon="fa-regular fa-user-unlock"
+          ></button>
+          <p-divider align="center" class="m-3">
+            <span>or register in with...</span>
+          </p-divider>
+          <div class="flex justify-content-evenly">
+            <button
+              pButton
+              type="button"
+              style="background-color: #dd4b39"
+              icon="fa-brands fa-google"
+              (click)="loginWithGoogle()"
+            ></button>
+            <button
+              pButton
+              type="button"
+              style="background-color: #1877f2"
+              icon="fa-brands fa-facebook"
+              (click)="loginWithFacebook()"
+            ></button>
+            <button
+              pButton
+              type="button"
+              style="background-color: #333"
+              icon="fa-brands fa-github"
+              (click)="loginWithGithub()"
+            ></button>
+          </div>
+        </form>
+      </p-tabPanel> </p-tabView
+  ></p-card>
 </div>
