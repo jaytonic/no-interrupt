@@ -7,6 +7,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
+import { CalendarModule } from 'primeng/calendar';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [],
@@ -23,5 +25,7 @@ export class SharedModule {
     PasswordModule,
     ButtonModule,
     DividerModule,
+    CalendarModule,
+    ToastModule,
   ];
 }

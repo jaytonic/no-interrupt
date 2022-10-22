@@ -1,1 +1,20 @@
-<div class="h-full">my-queue works!</div>
+<div class="h-full">
+  <div *ngIf="myQueue$ | async as myQueue; else noQueue">
+    here are queue details
+  </div>
+  <ng-template #noQueue>
+    <div
+      class="h-full flex flex-column justify-content-center text-center align-items-center"
+    >
+      <span>You have not configured your queue yet, please do it now</span>
+      <button
+        type="button"
+        pButton
+        icon="fa-regular fa-gears"
+        class="p-button-lg w-12rem p-button-outlined h-12rem m-3"
+        routerLink="/queues/settings"
+        label="setup"
+      ></button>
+    </div>
+  </ng-template>
+</div>

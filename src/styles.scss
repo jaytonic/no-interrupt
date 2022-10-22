@@ -105,3 +105,15 @@ body {
 .backdrop-blur-3xl {
   backdrop-filter: blur(64px);
 }
+
+//Icons replacement
+.pi {
+  font-family: "FontAwesome";
+}
+
+.pi-chevron-down:before {
+  content: "\f107";
+}
+.pi-chevron-up:before {
+  content: "\f077";
+}

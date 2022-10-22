@@ -1,0 +1,41 @@
+<form [formGroup]="form" (submit)="onSubmit()">
+  <div class="grid formgrid p-fluid">
+    <div class="field mb-4 col-12 md:col-6">
+      <label for="queueTitle" class="font-medium text-900">Queue title</label>
+      <input id="queueTitle" type="text" pInputText formControlName="title" />
+    </div>
+    <div class="field mb-4 col-12 md:col-6">
+      <label for="welcomeText" class="font-medium text-900">Welcome text</label>
+      <input id="welcomeText" type="text" pInputText formControlName="welcomeText"/>
+    </div>
+    <div class="field mb-4 col-12 md:col-6">
+      <label for="welcomeText" class="font-medium text-900"
+        >Non interruptible time</label
+      >
+      <p-calendar
+        hourFormat="24"
+        [showSeconds]="false"
+        [timeOnly]="true"
+        icon="fa-regular fa-alarm-clock"
+        formControlName="queueDuration"
+      ></p-calendar>
+    </div>
+    <div class="flex justify-content-between w-full">
+      <button
+        type="button"
+        class="m-3 p-button-outlined p-button-secondary w-auto"
+        pButton
+        icon="fa-regular fa-xmark-large"
+        label="Cancel"
+        routerLink="/queues"
+      ></button>
+      <button
+        type="submit"
+        class="m-3 w-auto"
+        pButton
+        label="Save"
+        icon="fa-regular fa-floppy-disk"
+      ></button>
+    </div>
+  </div>
+</form>
