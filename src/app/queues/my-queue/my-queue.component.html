@@ -1,6 +1,13 @@
 <div class="h-full">
   <div *ngIf="myQueue$ | async as myQueue; else noQueue">
-    here are queue details
+    <div *ngIf="myQueue.isOpen; else queueClosed">Queue open!
+      <div *ngIf="myQueue.noInterruptionMode; else interruptionMode">
+        Working!
+        Next opening in {{ remainingTime | async }} seconds
+      </div>
+      <ng-template #interruptionMode>Time to answer some questions</ng-template>
+    </div>
+    <ng-template #queueClosed> Queue closed </ng-template>
   </div>
   <ng-template #noQueue>
     <div

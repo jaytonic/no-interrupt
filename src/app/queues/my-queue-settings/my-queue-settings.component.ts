@@ -17,7 +17,7 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-my-queue-settings',
   templateUrl: './my-queue-settings.component.html',
-  styleUrls: ['./my-queue-settings.component.scss']
+  styleUrls: ['./my-queue-settings.component.scss'],
 })
 export class MyQueueSettingsComponent implements OnInit, OnDestroy {
   form = this.fb.group({
@@ -67,13 +67,16 @@ export class MyQueueSettingsComponent implements OnInit, OnDestroy {
     if (this.form.valid) {
       console.log(this.form.value);
       await setDoc(this.docReference, {
+        isOpen: false,
+        nextInterruptionTime: null,
+        noInterruptionMode: false,
         ...this.currentQueue,
         title: this.form.value.title,
         welcomeText: this.form.value.welcomeText,
         queueDuration:
           this.form.value.queueDuration!.getMinutes() +
           this.form.value.queueDuration!.getHours() * 60,
-      });
+      } as Queue);
       await this.messageService.add({
         severity: 'success',
         summary: 'Queue modified',
