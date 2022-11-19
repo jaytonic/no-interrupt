@@ -13,7 +13,7 @@ import Header from "../components/header.vue";
 <style scoped>
 .container {
   display: grid;
-  grid-template-columns: 1fr fit-content(64rem) 1fr;
+  grid-template-columns: 1fr auto 1fr;
   grid-template-rows: min-content auto;
 }
 .header {
@@ -27,5 +27,7 @@ import Header from "../components/header.vue";
   grid-column-end: 3;
   grid-row-start: 2;
   grid-row-end: 3;
+  width: 80vw;
+  max-width: 64rem;
 }
 </style>
