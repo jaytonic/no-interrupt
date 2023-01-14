@@ -13,7 +13,7 @@ meta:
           <TabPanel header="Login">
             <form class="flex flex-column">
               <div class="field h-full">
-                <label>Emai3</label>
+                <label>Email</label>
                 <span class="p-input-icon-left w-full">
                   <i class="fa-regular fa-at"></i>
                   <InputText class="w-full" type="text" />
